@@ -7,8 +7,6 @@ let secretVar = secrets.secrets();
 
 const app = express();
 
-const MY_SQL_QUERY = 'SELECT * FROM champions';
-
 const LEAGUE_VERSION_API = 'https://ddragon.leagueoflegends.com/api/versions.json';
 
 var connection = mysql.createConnection({
@@ -19,28 +17,6 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
-
-function getChampions() {
-  // GET CHAMPIONS
-  connection.query('SELECT * FROM champions ORDER BY id DESC LIMIT 1', function (error, results, fields) {
-    if (error) throw error;
-    if(results[0]) {
-      console.log('this is happening champs')
-      return results[0];
-    }
-  });
-}
-function getItems() {
-  // GET ITEMS
-  connection.query('SELECT * FROM items ORDER BY id DESC LIMIT 1', function (error, results, fields) {
-    if (error) throw error;
-    if(results[0]) {
-      console.log('this is happening items')
-      return results[0];
-    }
-  });
-}
-
 
 app.get('/db', (req, res) => {
   var query1 = "SELECT * FROM champions ORDER BY id DESC LIMIT 1";
@@ -85,7 +61,7 @@ app.get('/update', (req, res) => {
       }
       connection.query('SELECT * FROM patch ORDER BY id DESC LIMIT 1', function (error, results, fields) {
         if (error) throw error;
-        if (patch != results[0].patch) {
+        if (!results[0] || patch != results[0].patch) {
           var qStr = 'INSERT INTO patch (patch) VALUES ("'+ patch +'")'
           connection.query(qStr, (err, results, fields) => {
             if (err) throw err;
@@ -95,7 +71,9 @@ app.get('/update', (req, res) => {
       });
       connection.query('SELECT * FROM champions ORDER BY id DESC LIMIT 1', (err, results, fields) => {
         if (err) throw error;
-        var r = JSON.parse(results[0].data);
+        if(results[0]) {
+          var r = JSON.parse(results[0].data);
+        }
         if (results[0] && r.version == patch) {
           obj.champs = r;
         } else {
