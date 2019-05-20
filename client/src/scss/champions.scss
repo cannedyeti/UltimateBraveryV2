@@ -1,0 +1,14 @@
+.champion-list {
+    flex: 0 1 50%;
+}
+.champion__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .champion {
+        img {
+            height: 50px;
+            width: 50px;
+        }
+    }
+}
