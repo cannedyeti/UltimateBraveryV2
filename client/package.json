@@ -52,6 +52,7 @@
     "test": "node scripts/test.js --env=jsdom",
     "sass:build": "sass --update src/scss:src/styles/css"
   },
+  "proxy": "http://localhost:5000",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"

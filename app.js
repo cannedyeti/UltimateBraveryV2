@@ -5,9 +5,12 @@ const path = require('path');
 const fetch = require('node-fetch');
 require('dotenv').config();
 var async = require("async");
-//let secretVar = secrets.secrets();
+let secretVar = secrets.secrets();
 
 const app = express();
+const pw = process.env.DB_PASSWORD || '1234';
+const datab = process.env.DB_NAME || 'league_db';
+const user = process.env.DB_USER || 'cpotebnya';
 
 // Serve static assets if in prod
 if(process.env.NODE_ENV == 'production') {
@@ -21,17 +24,16 @@ if(process.env.NODE_ENV == 'production') {
 const port = process.env.PORT || 5000;
 
 console.log('dirname', __dirname)
-console.log('env what', process.env.NODE_ENV)
-console.log('env pw', process.env.DB_PASSWORD)
-console.log('env db', process.env.PORT)
+console.log('env pw', pw)
+console.log('env db', port)
 
 const LEAGUE_VERSION_API = 'https://ddragon.leagueoflegends.com/api/versions.json';
 
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'corn',
-  password : 'Merlin!3',
-  database : 'corn_league_db'
+  user     : user,
+  password : pw,
+  database : datab
 });
 
 connection.connect(function(err){
@@ -43,13 +45,7 @@ connection.connect(function(err){
     console.log('Connection established');
 });
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
-app.get('/api/db', (req, res) => {
+app.get('/db', (req, res) => {
   var query1 = "SELECT * FROM champions ORDER BY id DESC LIMIT 1";
   var query2 = "SELECT * FROM items ORDER BY id DESC LIMIT 1";
   var query3 = "SELECT * FROM patch ORDER BY id DESC LIMIT 1"
@@ -82,8 +78,7 @@ app.get('/api/db', (req, res) => {
     });
 })
 
-app.get('/api/update', (req, res) => {
-  console.log("pre async")
+app.get('/update', (req, res) => {
   fetch(LEAGUE_VERSION_API)
     .then(res => res.json())
     .then(p => {
@@ -93,7 +88,6 @@ app.get('/api/update', (req, res) => {
         'patch': patch
       }
       connection.query('SELECT * FROM patch ORDER BY id DESC LIMIT 1', function (error, results, fields) {
-        console.log('pre error ln 90')
         if (error) throw error;
         if (!results[0] || patch != results[0].patch) {
           var qStr = 'INSERT INTO patch (patch) VALUES ("'+ patch +'")'
@@ -116,7 +110,6 @@ app.get('/api/update', (req, res) => {
             .then(res => res.json())
             .then(c => {
               obj.champs = c;
-              // console.log(JSON.stringify(c));
               var qChampStr = "INSERT INTO champions (data) VALUES ("+ mysql.escape(JSON.stringify(c)) +")"
               connection.query(qChampStr, (err, results, fields) => {
                 if (err) throw err;
@@ -131,6 +124,7 @@ app.get('/api/update', (req, res) => {
           var r = JSON.parse(results[0].data);
           obj.items = r;
           obj = JSON.stringify(obj);
+          console.log('item data already in db');
           res.json(obj);
         } else {
           var itemApi = `http://ddragon.leagueoflegends.com/cdn/${patch}/data/en_US/item.json`;
