@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,cAAe;EACX,IAAI,EAAE,OAAO;;AAEjB,oBAAqB;EACjB,OAAO,EAAE,IAAI;EACb,SAAS,EAAE,IAAI;EACf,eAAe,EAAE,MAAM;EAEnB,kCAAI;IACA,MAAM,EAAE,IAAI;IACZ,KAAK,EAAE,IAAI",
-"sources": ["../../scss/champions.scss"],
-"names": [],
-"file": "champions.css"
-}

@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,KAAM;EACF,IAAI,EAAE,OAAO",
-"sources": ["../../scss/user.scss"],
-"names": [],
-"file": "user.css"
-}
