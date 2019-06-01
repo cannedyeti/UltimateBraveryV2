@@ -10,7 +10,7 @@ class Update extends React.Component {
         };
     }
     componentDidMount() {
-        fetch('/update')
+        fetch('/api/update')
             .then(res => {
 		console.log('res', res);
 		res.json()
