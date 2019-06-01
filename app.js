@@ -5,7 +5,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 require('dotenv').config();
 var async = require("async");
-let secretVar = secrets.secrets();
+//let secretVar = secrets.secrets();
 
 const app = express();
 const pw = process.env.DB_PASSWORD || '1234';
