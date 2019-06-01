@@ -25,7 +25,7 @@ class Update extends React.Component {
     render() {
         return (
         <div>
-            <h4>Currently updated to patch {this.state.patch ? this.state.patch : ''}</h4>
+            <h4>Currently updated to patch: {this.state.patch ? this.state.patch : ''}</h4>
         </div>
         )
     }
