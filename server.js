@@ -1,11 +1,29 @@
 const secrets = require('./secrets');
 const express = require('express');
 const mysql = require('mysql');
+const path = require('path');
 const fetch = require('node-fetch');
+require('dotenv').config({path: __dirname + '/.env'})
 var async = require("async");
 let secretVar = secrets.secrets();
 
 const app = express();
+
+// Serve static assets if in prod
+if(process.env.NODE_ENV === 'production') {
+  // set static folder
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  })
+}
+
+const port = process.env.PORT || 5000;
+
+console.log('dirname', __dirname)
+console.log('env key', process.env)
+console.log('env port', process.env.DB_PASSWORD)
+console.log('env db', process.env.PORT)
 
 const LEAGUE_VERSION_API = 'https://ddragon.leagueoflegends.com/api/versions.json';
 
@@ -117,6 +135,5 @@ app.get('/update', (req, res) => {
     })
 })
 
-const port = 5000;
 
 app.listen(port, () => `Server running on port ${port}`);
