@@ -11,7 +11,10 @@ class Update extends React.Component {
     }
     componentDidMount() {
         fetch('/update')
-            .then(res => res.json())
+            .then(res => {
+		console.log('res', res);
+		res.json()
+	    })
             .then(obj => {
                 console.log('object', obj);
                 var data = obj;
