@@ -82,7 +82,7 @@ app.get('/api/db', (req, res) => {
     });
 })
 
-app.get('/update', (req, res) => {
+app.get('/api/update', (req, res) => {
   console.log("pre async")
   fetch(LEAGUE_VERSION_API)
     .then(res => res.json())

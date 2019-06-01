@@ -17,7 +17,10 @@ class UltimateBravery extends Component {
 
   componentDidMount() {
     fetch('/api/db')
-      .then(res => res.json())
+      .then(res => {
+          console.log('UB res', res)
+          res.json()
+        })
         .then(obj => {
             console.log('object', obj)
             this.setState({
