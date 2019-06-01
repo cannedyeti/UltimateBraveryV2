@@ -13,6 +13,7 @@ class Update extends React.Component {
         fetch('/update')
             .then(res => res.json())
             .then(obj => {
+                console.log('object', obj);
                 var data = obj;
                 var p = JSON.parse(data)
                 this.setState({
