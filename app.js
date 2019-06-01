@@ -43,6 +43,12 @@ connection.connect(function(err){
     console.log('Connection established');
 });
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.get('/api/db', (req, res) => {
   var query1 = "SELECT * FROM champions ORDER BY id DESC LIMIT 1";
   var query2 = "SELECT * FROM items ORDER BY id DESC LIMIT 1";
