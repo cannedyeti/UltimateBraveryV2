@@ -3,14 +3,14 @@ const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
 const fetch = require('node-fetch');
-require('dotenv').config({path: __dirname + '/.env'})
+require('dotenv').config();
 var async = require("async");
-let secretVar = secrets.secrets();
+//let secretVar = secrets.secrets();
 
 const app = express();
 
 // Serve static assets if in prod
-if(process.env.NODE_ENV === 'production') {
+if(process.env.NODE_ENV == 'production') {
   // set static folder
   app.use(express.static('client/build'));
   app.get('*', (req, res) => {
@@ -21,20 +21,27 @@ if(process.env.NODE_ENV === 'production') {
 const port = process.env.PORT || 5000;
 
 console.log('dirname', __dirname)
-console.log('env key', process.env)
-console.log('env port', process.env.DB_PASSWORD)
+console.log('env what', process.env.NODE_ENV)
+console.log('env pw', process.env.DB_PASSWORD)
 console.log('env db', process.env.PORT)
 
 const LEAGUE_VERSION_API = 'https://ddragon.leagueoflegends.com/api/versions.json';
 
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'cpotebnya',
-  password : secretVar.DB_PASSWORD,
-  database : 'league_db'
+  user     : 'corn',
+  password : 'Merlin!3',
+  database : 'corn_league_db'
 });
 
-connection.connect();
+connection.connect(function(err){
+    if(err){
+        console.log('Error connecting to Db', err);
+        return;
+    }
+
+    console.log('Connection established');
+});
 
 app.get('/db', (req, res) => {
   var query1 = "SELECT * FROM champions ORDER BY id DESC LIMIT 1";

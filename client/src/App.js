@@ -16,8 +16,8 @@ import Error from './components/Error';
 import Update from './components/Update';
 import './scss/app.scss';
 
-// IMPORT ALL SCSS
-importAll(require.context('../src/scss/', false, /\.(scss)$/));
+// IMPORT ALL CSS
+importAll(require.context('../src/styles/css/', false, /\.(css)$/));
 
 // VARIABLES
 const MAX_IMAGES_ON_TEAM_PICKER = ($(window).width()/128);
