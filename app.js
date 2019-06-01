@@ -43,7 +43,7 @@ connection.connect(function(err){
     console.log('Connection established');
 });
 
-app.get('/db', (req, res) => {
+app.get('/api/db', (req, res) => {
   var query1 = "SELECT * FROM champions ORDER BY id DESC LIMIT 1";
   var query2 = "SELECT * FROM items ORDER BY id DESC LIMIT 1";
   var query3 = "SELECT * FROM patch ORDER BY id DESC LIMIT 1"
