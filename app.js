@@ -77,14 +77,17 @@ app.get('/db', (req, res) => {
 })
 
 app.get('/update', (req, res) => {
+  console.log("pre async")
   fetch(LEAGUE_VERSION_API)
     .then(res => res.json())
     .then(p => {
       var patch = p[0];
+      console.log('patch', patch)
       var obj = {
         'patch': patch
       }
       connection.query('SELECT * FROM patch ORDER BY id DESC LIMIT 1', function (error, results, fields) {
+        console.log('pre error ln 90')
         if (error) throw error;
         if (!results[0] || patch != results[0].patch) {
           var qStr = 'INSERT INTO patch (patch) VALUES ("'+ patch +'")'
