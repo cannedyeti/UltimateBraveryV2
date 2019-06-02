@@ -1,4 +1,4 @@
-const secrets = require('./secrets');
+//const secrets = require('./secrets');
 const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
@@ -8,17 +8,18 @@ var async = require("async");
 //let secretVar = secrets.secrets();
 
 const app = express();
-const pw = process.env.DB_PASSWORD || '1234';
+const pw = process.env.DB_PASSWORD || 'Merlin!3';
 const datab = process.env.DB_NAME || 'league_db';
-const user = process.env.DB_USER || 'cpotebnya';
+const user = process.env.DB_USER || 'corn';
+const env = process.env.NODE_ENV || 'production';
+
+const cors = require('cors')
+
+app.use(cors())
 
 // Serve static assets if in prod
-if(process.env.NODE_ENV == 'production') {
-  // set static folder
-  app.use(express.static('client/build'));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  })
+if(env == 'production') {
+	app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
 const port = process.env.PORT || 5000;
@@ -44,6 +45,11 @@ connection.connect(function(err){
 
     console.log('Connection established');
 });
+
+app.get('/test', (req, res) => {
+	return res.end('Hello World!')
+});
+
 
 app.get('/db', (req, res) => {
   var query1 = "SELECT * FROM champions ORDER BY id DESC LIMIT 1";
@@ -79,7 +85,7 @@ app.get('/db', (req, res) => {
     });
 })
 
-app.get('/update', (req, res) => {
+app.get('/updatedb', (req, res) => {
   console.log('App get Update');
   fetch(LEAGUE_VERSION_API)
     .then(res => res.json())
@@ -148,4 +154,4 @@ app.get('/update', (req, res) => {
 })
 
 
-app.listen(port, () => `Server running on port ${port}`);
+app.listen(port, () => console.log(`Server running on port ${port}`));
