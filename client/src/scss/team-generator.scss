@@ -1,0 +1,19 @@
+.team-generator {
+    .team-input-container {
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .player-input-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem 0;
+    }
+    .team-output-container {
+        display: flex;
+        justify-content: space-evenly;
+        .team-container {
+            flex: 1 0 50%;
+        }
+    }
+}

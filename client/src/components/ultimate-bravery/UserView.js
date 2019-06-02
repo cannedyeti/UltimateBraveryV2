@@ -39,8 +39,8 @@ class UserView extends Component {
 
   render() {
     return (
-      <div className="user">
-        <button onClick={this.getChampion} className="brave-button"><span>Make a mother fucker brave</span></button>
+      <div className="user-view">
+        <button onClick={this.getChampion} className="button button--brave"><span>Make a mother fucker brave</span></button>
           {!this.state.selectedChampion ? 
                 <p>Please select a champion...</p> 
             : 

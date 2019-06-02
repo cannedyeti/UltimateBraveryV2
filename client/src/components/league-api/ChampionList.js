@@ -45,23 +45,25 @@ class ChampionList extends Component {
     var currentChamps = this.state.champIdArray;
     return (
       <div className="champion-list">
-        <button 
-          className=""
-          onClick={() => {
-            this.props.getChamp(champIds)
-            this.setState({
-              champIdArray: champIds
-            })
-        }}><span>Select All Champions</span>
-        </button>
-        <button 
-          className=""
-          onClick={() => {
-            this.props.getChamp([])
-            this.setState({
-              champIdArray: []
-            })  
-        }}><span>Deselect All Champions</span></button>
+        <div className="champion-list__button-container">
+          <button 
+            className="button"
+            onClick={() => {
+              this.props.getChamp(champIds)
+              this.setState({
+                champIdArray: champIds
+              })
+            }}><span>Select All Champions</span>
+          </button>
+          <button 
+            className="button"
+            onClick={() => {
+              this.props.getChamp([])
+              this.setState({
+                champIdArray: []
+              })  
+            }}><span>Deselect All Champions</span></button>
+        </div>
         <div className="champion__container">
           {this.state.champions ? 
             Object.keys(this.state.champions.data).map((keyName, i) => (

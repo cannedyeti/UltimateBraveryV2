@@ -42,13 +42,16 @@ class UltimateBravery extends Component {
         console.log("this state", (this.state))
     }
     return (
-      <div className="ultimate-bravery">
-        <UserView patch={this.state.patch} champArr={this.state.champArr} />
-        {this.state.champions ? 
-            <ChampionList  getChamp={this.getChampions} items={this.state.items} champions={this.state.champions} patch={this.state.patch} />
-        :
-            null
-        }
+      <div>
+        <div className="content__title">Ultimate Bravery</div>
+          <div className="ultimate-bravery">
+          <UserView patch={this.state.patch} champArr={this.state.champArr} />
+          {this.state.champions ? 
+              <ChampionList  getChamp={this.getChampions} items={this.state.items} champions={this.state.champions} patch={this.state.patch} />
+          :
+              null
+          }
+        </div>
       </div>
     );
   }

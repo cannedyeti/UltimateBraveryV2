@@ -13,6 +13,7 @@ import UltimateBravery from './components/ultimate-bravery/UltimateBravery';
 import Nav from './components/Nav';
 import Home from './components/Home';
 import Error from './components/Error';
+import TeamGenerator from './components/team-generator/TeamGenerator';
 import Update from './components/Update';
 import './scss/app.scss';
 
@@ -41,14 +42,17 @@ class App extends Component {
         <div className="App">
           {/* <img alt="league-logo" className="league-logo" src={Logo} /> */}
           <Nav />
-          <div className="content-container">
-          <Switch>
-              <Route exact path='/' component={Home}/>
-              <Route exact path='/champion-list' component={UltimateBravery} />
-              <Route exact path='/update' component={Update} />
-              {/* <Route exact path='/team-picker' render={(props) => <TeamPicker {...props} active={active} images={arr} />} /> */}
-              <Route component={Error} />
-          </Switch>
+          <div className="l-constrain">
+            <div className="content-container">
+              <Switch>
+                  <Route exact path='/' component={Home}/>
+                  <Route exact path='/ultimate-bravery' component={UltimateBravery} />
+                  <Route exact path='/team-generator' component={TeamGenerator} />
+                  <Route exact path='/update' component={Update} />
+                  {/* <Route exact path='/team-picker' render={(props) => <TeamPicker {...props} active={active} images={arr} />} /> */}
+                  <Route component={Error} />
+              </Switch>
+            </div>
           </div>
           {/* <Footer /> */}
         </div>
