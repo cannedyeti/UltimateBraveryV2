@@ -18,6 +18,7 @@ import './scss/app.scss';
 
 // IMPORT ALL CSS
 importAll(require.context('../src/styles/css/', false, /\.(css)$/));
+importAll(require.context('../src/scss/', false, /\.(scss)$/));
 
 // VARIABLES
 const MAX_IMAGES_ON_TEAM_PICKER = ($(window).width()/128);

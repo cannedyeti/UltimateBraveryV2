@@ -8,9 +8,9 @@ var async = require("async");
 //let secretVar = secrets.secrets();
 
 const app = express();
-const pw = process.env.DB_PASSWORD || 'Merlin!3';
+const pw = process.env.DB_PASSWORD || '1234';
 const datab = process.env.DB_NAME || 'league_db';
-const user = process.env.DB_USER || 'corn';
+const user = process.env.DB_USER || 'cpotebnya';
 const env = process.env.NODE_ENV || 'production';
 
 const cors = require('cors')

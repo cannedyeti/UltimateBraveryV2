@@ -18,8 +18,7 @@ class Update extends React.Component {
             .then(obj => {
                 console.log('object', obj);
                 var data = obj;
-                var p = data
-                // JSON.parse(data)
+                var p = JSON.parse(data)
                 this.setState({
                     patch: p.patch
                 })
