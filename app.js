@@ -11,7 +11,7 @@ const app = express();
 const pw = process.env.DB_PASSWORD || '1234';
 const datab = process.env.DB_NAME || 'league_db';
 const user = process.env.DB_USER || 'cpotebnya';
-const env = process.env.NODE_ENV || 'production';
+const env = process.env.NODE_ENV || 'local';
 
 const cors = require('cors')
 
@@ -25,8 +25,8 @@ if(env == 'production') {
 const port = process.env.PORT || 5000;
 
 console.log('dirname', __dirname)
-console.log('env pw', pw)
-console.log('env db', port)
+console.log('env pw', pw, "user", user)
+console.log('env port', port)
 
 const LEAGUE_VERSION_API = 'https://ddragon.leagueoflegends.com/api/versions.json';
 
