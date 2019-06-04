@@ -20,7 +20,6 @@ class UserView extends Component {
       setTimeout(()=> {
         var arr = this.props.champArr;
         var x = arr[Math.floor(Math.random()*arr.length)];
-        console.log(x);
         this.setState({
           selectedChampion: x
         })
