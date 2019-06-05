@@ -42,18 +42,13 @@ You will need to setup a MYSQL server for this app to work.
 
 ```
 
-You will also need to create secrets.js in the root directory with the following info.
+You will also need to create the following environment variables that correspond to the DB you create.
 
 ```
-module.exports = {
-    secrets: function() {
-        var secrets = {
-            'LEAGUE_API_KEY': 'YOUR API KEY GOES HERE',
-            'DB_PASSWORD': 'YOUR DB PASSWORD GOES HERE'
-        }
-        return secrets;
-    }
- }
+DB_USER=your database user
+DB_PASSWORD=your database password
+DB_NAME=you database name
+NODE_ENV=local
 
 ```
 
