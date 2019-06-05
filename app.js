@@ -1,16 +1,16 @@
 //const secrets = require('./secrets');
+require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
 const fetch = require('node-fetch');
-require('dotenv').config();
 var async = require("async");
 //let secretVar = secrets.secrets();
 
 const app = express();
-const pw = process.env.DB_PASSWORD || '1234';
-const datab = process.env.DB_NAME || 'league_db';
-const user = process.env.DB_USER || 'cpotebnya';
+const pw = process.env.DB_PASSWORD;
+const datab = process.env.DB_NAME;
+const user = process.env.DB_USER;
 const env = process.env.NODE_ENV || 'local';
 
 const cors = require('cors')
