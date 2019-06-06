@@ -39,9 +39,6 @@ class ChampionList extends Component {
     for (var c in this.state.champions.data) {
       champIds.push(this.state.champions.data[c].id)
     }
-    if (this.state) {
-        console.log("this state champlist", (this.state))
-    }
     var currentChamps = this.state.champIdArray;
     return (
       <div className="champion-list">

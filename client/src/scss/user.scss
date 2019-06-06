@@ -1,3 +1,7 @@
 .user-view {
     flex: 0 1 60%;
+    .items, .summoners {
+        display: flex;
+        justify-content: center;
+    }
 }

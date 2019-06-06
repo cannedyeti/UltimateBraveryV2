@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ChampionList from '../league-api/ChampionList';
 import UserView from './UserView';
+const removeNames = ['Enchantment: Warrior', "Enchantment: Cinderhulk", "Enchantment: Runic Echoes", "Enchantment: Bloodrazor"]
 
 class UltimateBravery extends Component {
   constructor() {
@@ -9,6 +10,8 @@ class UltimateBravery extends Component {
         champions: '',
         items: '',
         patch: '',
+        runes: '',
+        summs: '',
         champArr: []
     };
     this.getChampions = this.getChampions.bind(this);
@@ -28,6 +31,8 @@ class UltimateBravery extends Component {
           this.setState({
             items: x.items,
             champions: JSON.parse(x.champions.data),
+            runes: JSON.parse(x.runes.data),
+            summs: JSON.parse(x.summs.data),
             patch: x.patch.patch
           })
         })
@@ -58,12 +63,12 @@ class UltimateBravery extends Component {
             if(e == 3069 || e == 3401 || e == 3092) {
               itemsObj.support[e] = items[e]
               // else if it's a smite item
-            } else if (items[e].name.includes('Enchantment'))  {
+            } else if (items[e].name.includes('Enchantment') && items[e].effect)  {
               itemsObj.smite[e] = items[e]
               // else if it's boots
             } else if (items[e].tags.includes('Boots')) {
               itemsObj.boots[e] = items[e];
-            } else {
+            } else if (!removeNames.includes(items[e].name)) {
               itemsObj.all[e] = items[e];
             }
           }
@@ -76,14 +81,12 @@ class UltimateBravery extends Component {
   }
 
   render() {
-    if (this.state) {
-      console.log('This is UB state', this.state);
-    }
+    console.log('smite items', this.state.items.all);
     return (
       <div>
         <div className="content__title">Ultimate Bravery</div>
           <div className="ultimate-bravery">
-          <UserView patch={this.state.patch} champArr={this.state.champArr} />
+          <UserView patch={this.state.patch} itemObj={this.state.items} summsObj={this.state.summs} runesObj={this.state.runes} champArr={this.state.champArr} />
           {this.state.champions ? 
               <ChampionList  getChamp={this.getChampions} items={this.state.items} champions={this.state.champions} patch={this.state.patch} />
           :

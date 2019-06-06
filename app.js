@@ -24,9 +24,8 @@ if(env == 'production') {
 
 const port = process.env.PORT || 5000;
 
-console.log('dirname', __dirname)
-console.log('env pw', pw, "user", user)
-console.log('env port', port)
+// console.log('env pw', pw, "user", user)
+// console.log('env port', port)
 
 const LEAGUE_VERSION_API = 'https://ddragon.leagueoflegends.com/api/versions.json';
 
@@ -55,6 +54,8 @@ app.get('/db', (req, res) => {
   var query1 = "SELECT * FROM champions ORDER BY id DESC LIMIT 1";
   var query2 = "SELECT * FROM items ORDER BY id DESC LIMIT 1";
   var query3 = "SELECT * FROM patch ORDER BY id DESC LIMIT 1";
+  var query4 = "SELECT * FROM runes ORDER BY id DESC LIMIT 1";
+  var query5 = "SELECT * FROM summonerspells ORDER BY id DESC LIMIT 1";
   console.log('App get DB');
   var return_data = {}; 
   async.parallel([
@@ -76,6 +77,20 @@ app.get('/db', (req, res) => {
       connection.query(query3, {}, function(err, results) {
           if (err) return parallel_done(err);
           return_data.patch = results[0];
+          parallel_done();
+      });
+    },
+    function(parallel_done) {
+      connection.query(query4, {}, function(err, results) {
+          if (err) return parallel_done(err);
+          return_data.runes = results[0];
+          parallel_done();
+      });
+    },
+    function(parallel_done) {
+      connection.query(query5, {}, function(err, results) {
+          if (err) return parallel_done(err);
+          return_data.summs = results[0];
           parallel_done();
       });
     }
@@ -104,7 +119,8 @@ app.get('/updatedb', (req, res) => {
             console.log("patch inserted");
           })
         }
-      });
+      }); //end conn
+      // CHAMPIONS API
       connection.query('SELECT * FROM champions ORDER BY id DESC LIMIT 1', (err, results, fields) => {
         if (err) throw error;
         if(results[0]) {
@@ -125,15 +141,16 @@ app.get('/updatedb', (req, res) => {
               })
             })
         }
-      });
+      }); // end conn
+      // ITEMS API
       connection.query('SELECT * FROM items ORDER BY id DESC LIMIT 1' , (err, results, fields) => {
         if (err) throw error;
         if (results[0]) {
           var r = JSON.parse(results[0].data);
+        }
+        if (results[0] && r.version == patch) {
           obj.items = r;
-          obj = JSON.stringify(obj);
-          console.log('item data already in db');
-          res.json(obj);
+          console.log('items data already in db');
         } else {
           var itemApi = `http://ddragon.leagueoflegends.com/cdn/${patch}/data/en_US/item.json`;
           fetch(itemApi)
@@ -146,10 +163,59 @@ app.get('/updatedb', (req, res) => {
                 console.log("itemData inserted");
               })
               obj = JSON.stringify(obj);
+            })
+        }
+      }); //end conn
+      var runesQ = `SELECT * FROM runes WHERE version='${patch}'`;
+      connection.query(runesQ, (err, results, fields) => {
+        if (err) throw error;
+        if (results[0]) {
+          var r = JSON.parse(results[0].data);
+        }
+        if (results[0] && results[0].version == patch) {
+          obj.runes = r;
+          console.log('runes data already in db');
+        } else {
+          var runeApi = `http://ddragon.leagueoflegends.com/cdn/${patch}/data/en_US/runesReforged.json`;
+          fetch(runeApi)
+            .then(res => res.json())
+            .then(runes => {
+              obj.runes = JSON.stringify(runes);
+              var qRuneStr = "INSERT INTO runes (data, version) VALUES ("+ mysql.escape(JSON.stringify(runes)) +", " + mysql.escape(patch) + ")"
+              connection.query(qRuneStr, (err, results, fields) => {
+                if (err) throw err;
+                console.log("runeData inserted");
+              })
+              obj = JSON.stringify(obj);
+            })
+        }
+      }); //end conn
+      connection.query('SELECT * FROM summonerspells ORDER BY id DESC LIMIT 1' , (err, results, fields) => {
+        if (err) throw error;
+        if (results[0]) {
+          var r = JSON.parse(results[0].data);
+        }
+        if (results[0] && r.version == patch) {
+          obj.summs = r;
+          obj = JSON.stringify(obj);
+          console.log('summoner spell data already in db');
+          res.json(obj);
+        } else {
+          var summonerApi = `http://ddragon.leagueoflegends.com/cdn/${patch}/data/en_US/summoner.json`;
+          fetch(summonerApi)
+            .then(res => res.json())
+            .then(summs => {
+              obj.summs = JSON.stringify(summs);
+              var qSumsStr = "INSERT INTO summonerspells (data) VALUES ("+ mysql.escape(JSON.stringify(summs)) +")"
+              connection.query(qSumsStr, (err, results, fields) => {
+                if (err) throw err;
+                console.log("summoner spell data inserted");
+              })
+              obj = JSON.stringify(obj);
               res.json(obj);
             })
         }
-      })
+      }); //end conn
     })
 })
 

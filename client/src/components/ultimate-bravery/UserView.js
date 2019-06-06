@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import RandomChampion from './RandomChampion';
+import RandomItems from './random/RandomItems';
+import RandomSumms from './random/RandomSumms';
+const SMITECHANCE = 20; //Out of 100;
 
 
 class UserView extends Component {
@@ -7,9 +10,11 @@ class UserView extends Component {
     super(props);
     this.state = {
         selectedChampion: null,
-        champArr: this.props.champArr
+        champArr: this.props.champArr,
+        smite: false
     };
     this.getChampion = this.getChampion.bind(this);
+    this.setSmite = this.setSmite.bind(this);
   }
 
   getChampion() {
@@ -21,19 +26,30 @@ class UserView extends Component {
         var arr = this.props.champArr;
         var x = arr[Math.floor(Math.random()*arr.length)];
         this.setState({
-          selectedChampion: x
+          selectedChampion: x,
+          smite: this.setSmite()
         })
+
       },1)
     } else {
       var arr = this.props.champArr;
       var x = arr[Math.floor(Math.random()*arr.length)];
       this.setState({
-        selectedChampion: x
+        selectedChampion: x,
+        smite: this.setSmite()
       })
     }
   }
 
+  setSmite() {
+    if(Math.random() * 100 <= SMITECHANCE) {
+      return true
+    }
+    return false;
+  }
+
   componentDidMount() {
+
   }
 
   render() {
@@ -43,7 +59,11 @@ class UserView extends Component {
           {!this.state.selectedChampion ? 
                 <p>Please select a champion...</p> 
             : 
-                <RandomChampion patch={this.props.patch} id={this.state.selectedChampion} />
+                <div>
+                  <RandomChampion patch={this.props.patch} id={this.state.selectedChampion} />
+                  <RandomSumms summsObj={this.props.summsObj} patch={this.props.patch} smiteBool={this.state.smite} />
+                  <RandomItems itemsObj={this.props.itemObj} patch={this.props.patch} smiteBool={this.state.smite} />
+                </div>
           }
       </div>
     );

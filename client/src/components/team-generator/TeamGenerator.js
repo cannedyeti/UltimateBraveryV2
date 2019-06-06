@@ -52,16 +52,16 @@ class TeamGenerator extends React.Component {
             })
             setTimeout(()=> {
                 this.setState({
-                    teamOne: teamArr[0].value,
-                    teamTwo: teamArr[1].value,
+                    teamOne: teamArr[0].value || 'Team One',
+                    teamTwo: teamArr[1].value || 'Team Two',
                     message: 'Randomized',
                     players: playersArr
                 })
             },1)
         } else {
             this.setState({
-                teamOne: teamArr[0].value,
-                teamTwo: teamArr[1].value,
+                teamOne: teamArr[0].value || 'Team One',
+                teamTwo: teamArr[1].value || 'Team Two',
                 message: 'Randomized',
                 players: playersArr
             })
