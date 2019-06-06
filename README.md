@@ -29,16 +29,25 @@ You will need to setup a MYSQL server for this app to work.
 
 ```
     Table: champions
-    id: int
+    id: int (PK, AI)
     data: longtext
 
     Table: items
-    id: int
+    id: int (PK, AI)
     data: longtext
 
     Table: patch
-    id: int
+    id: int (PK, AI)
     patch: varchar(45)
+    
+    Table: runes
+    id: int (PK, AI)
+    data: longtext
+    version: varchar(45)
+    
+    Table: summonerspells
+    id: int (PK, AI)
+    data: longtext
 
 ```
 
