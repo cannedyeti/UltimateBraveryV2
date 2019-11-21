@@ -1,5 +1,5 @@
 .nav {
-    background-color: #9d8abf;
+    background-color: var(--nav-color);
     .l-constrain {
         display: flex;
         justify-content: space-between;
@@ -13,7 +13,7 @@
         }
         a {
             text-decoration: none;
-            color: white;
+            color: var(--nav-font-color);
         }
     }
     .nav__social {

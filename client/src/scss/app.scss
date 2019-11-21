@@ -1,6 +1,31 @@
+:root {
+    --primary-color: #fff;
+    --secondary-color: #536390;
+    --nav-color: #9d8abf;
+    --font-color: #424242;
+    --bg-color: #fff;
+    --heading-color: #292922;
+    --switch-color: #9d8abf;
+}
+
+[data-theme="dark"] {
+    --primary-color: #9d8abf;
+    --secondary-color: #818cab;
+    --nav-color: #e1e1ff;
+    --nav-font-color:   #473E56;
+    --font-color: #e1e1ff;
+    --bg-color:   #473E56;
+    --heading-color: #818cab;
+    --switch-color: #e1e1ff;
+}
+
+
 .App {
+    background-color: var(--bg-color);
     text-align: center;
+    min-height: 100vh;
     font-family: 'Noto Sans', sans-serif;
+    color: var(--font-color);
     .l-constrain {
         max-width: 1200px;
         margin: 0 auto;
@@ -15,6 +40,10 @@
             padding-bottom: 2rem;
             font-size: 36px;
             text-transform: uppercase;
+            color: var(--font-color);
         }
+    }
+    a {
+        color: var(--font-color);
     }
 }

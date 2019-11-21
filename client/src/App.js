@@ -11,6 +11,7 @@ import $ from 'jquery';
 // Components
 import UltimateBravery from './components/ultimate-bravery/UltimateBravery';
 import Nav from './components/Nav';
+import DarkMode from './components/DarkMode';
 import Home from './components/Home';
 import Error from './components/Error';
 import TeamGenerator from './components/team-generator/TeamGenerator';
@@ -54,6 +55,7 @@ class App extends Component {
               </Switch>
             </div>
           </div>
+          <DarkMode />
           {/* <Footer /> */}
         </div>
       </Router>
