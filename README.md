@@ -61,6 +61,12 @@ NODE_ENV=local
 
 ```
 
+## Compile ScSS on Host Server
+
+```
+Use sudo npm run sass:build within the client folder. 
+```
+
 ### Author
 
 Connor Potebnya
