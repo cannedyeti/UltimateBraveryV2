@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ChampionList from '../league-api/ChampionList';
 import UserView from './UserView';
-const removeNames = ['Enchantment: Warrior', "Enchantment: Cinderhulk", "Enchantment: Runic Echoes", "Enchantment: Bloodrazor"]
+const removeNames = ['Enchantment: Warrior', "Enchantment: Cinderhulk", "Enchantment: Runic Echoes", "Enchantment: Bloodrazor", "Spear of Shojin", "Zz'Rot Portal", "Archangel's Staff (Quick Charge)", "Manamune (Quick Charge)", "Rod of Ages (Quick Charge)", "Archangel's Staff", "Manamune"]
 
 class UltimateBravery extends Component {
   constructor() {
@@ -81,7 +81,6 @@ class UltimateBravery extends Component {
   }
 
   render() {
-    console.log('smite items', this.state.items.all);
     return (
       <div>
         <div className="content__title">Ultimate Bravery</div>

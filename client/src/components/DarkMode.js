@@ -20,10 +20,10 @@ class DarkMode extends React.Component {
     }
     render() {
       return (
-        <div class="theme-switch">
-            <label class="theme-switch__checkbox" for="checkbox">
+        <div className="theme-switch">
+            <label className="theme-switch__checkbox" htmlFor="checkbox">
                 <input onChange={this.switchTheme} type="checkbox" id="checkbox" />
-                <div class="theme-switch__slider"></div>
+                <div className="theme-switch__slider"></div>
             </label>
         </div>
       )

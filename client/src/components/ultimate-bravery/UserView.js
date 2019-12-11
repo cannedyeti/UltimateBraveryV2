@@ -11,7 +11,8 @@ class UserView extends Component {
     this.state = {
         selectedChampion: null,
         champArr: this.props.champArr,
-        smite: false
+        smite: false,
+        boots: true
     };
     this.getChampion = this.getChampion.bind(this);
     this.setSmite = this.setSmite.bind(this);
@@ -25,9 +26,15 @@ class UserView extends Component {
       setTimeout(()=> {
         var arr = this.props.champArr;
         var x = arr[Math.floor(Math.random()*arr.length)];
+        var boots = true;
+        // If the champion is casss (no boots)
+        if (x === 'Cassiopeia') {
+          boots = false;
+        }
         this.setState({
           selectedChampion: x,
-          smite: this.setSmite()
+          smite: this.setSmite(),
+          boots: boots
         })
 
       },1)
@@ -62,7 +69,7 @@ class UserView extends Component {
                 <div>
                   <RandomChampion patch={this.props.patch} id={this.state.selectedChampion} />
                   <RandomSumms summsObj={this.props.summsObj} patch={this.props.patch} smiteBool={this.state.smite} />
-                  <RandomItems itemsObj={this.props.itemObj} patch={this.props.patch} smiteBool={this.state.smite} />
+                  <RandomItems itemsObj={this.props.itemObj} patch={this.props.patch} smiteBool={this.state.smite} bootsBool={this.state.boots} />
                 </div>
           }
       </div>

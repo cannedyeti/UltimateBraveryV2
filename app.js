@@ -5,17 +5,56 @@ const mysql = require('mysql');
 const path = require('path');
 const fetch = require('node-fetch');
 var async = require("async");
+var bodyParser = require('body-parser');
 //let secretVar = secrets.secrets();
 
+// create application/json parser
+var jsonParser = bodyParser.json()
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 const app = express();
-const pw = process.env.DB_PASSWORD;
-const datab = process.env.DB_NAME;
-const user = process.env.DB_USER;
+const pw = process.env.DB_PASSWORD || '1234';
+const datab = process.env.DB_NAME || 'league_db';
+const user = process.env.DB_USER || 'cpotebnya';
 const env = process.env.NODE_ENV || 'local';
+const cors = require('cors');
 
-const cors = require('cors')
+// Discord Bot Test
+const Discord = require('discord.js');
+const client = new Discord.Client();
+const token = 'NjUzNzE5MjczMTQyODc4MjI5.Xe7FvA.GjKxB6JhB9bsPL66mzXmT5wNYcE';
+const prefix = '^';
+var channel = '';
+const memArr = [];
 
-app.use(cors())
+client.on('ready', () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+});
+
+client.on('message', msg => {
+  if (!msg.content.startsWith(prefix)) {
+    return;
+  }
+  var content = msg.content.slice(1);
+  if (content === 'getPlayers') {
+    if (!msg.member.voiceChannel) {
+      msg.reply('You must be in a voice channel to do that.');
+      return;
+    }
+    const members = msg.member.voiceChannel.members;
+    const memArr = [];
+    members.forEach(x => {
+      memArr.push(x.user.username);
+    })
+    console.log(memArr);
+  }
+});
+client.login(token);
+// End discord test
+
+app.use(cors());
+app.use(bodyParser.json())
 
 // Serve static assets if in prod
 if(env == 'production') {
@@ -23,9 +62,6 @@ if(env == 'production') {
 }
 
 const port = process.env.PORT || 5000;
-
-// console.log('env pw', pw, "user", user)
-// console.log('env port', port)
 
 const LEAGUE_VERSION_API = 'https://ddragon.leagueoflegends.com/api/versions.json';
 
@@ -41,14 +77,19 @@ connection.connect(function(err){
         console.log('Error connecting to Db', err);
         return;
     }
-
     console.log('Connection established');
 });
 
-app.get('/test', (req, res) => {
-	return res.end('Hello World!')
+app.post('/players', (req, res) => {
+  var c = req.body.channel;
+  var channel = client.channels.get(c);
+  const memArr = [];
+  const members = channel.members;
+  members.forEach(x => {
+    memArr.push(x.user.username);
+  })
+  res.send(memArr)
 });
-
 
 app.get('/db', (req, res) => {
   var query1 = "SELECT * FROM champions ORDER BY id DESC LIMIT 1";
@@ -98,7 +139,7 @@ app.get('/db', (req, res) => {
           if (err) console.log(err);
           res.json(return_data);
     });
-})
+});
 
 app.get('/updatedb', (req, res) => {
   console.log('App get Update');
@@ -217,7 +258,7 @@ app.get('/updatedb', (req, res) => {
         }
       }); //end conn
     })
-})
+});
 
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

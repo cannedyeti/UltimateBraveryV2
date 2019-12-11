@@ -20,9 +20,17 @@ class RandomItems extends React.Component {
   }
   randomizeItems() {
       var itemArr = [];
-      itemArr.push(randomProperty(this.props.itemsObj.boots));
+      if(!this.props.bootsBool) {
+        itemArr.push(randomProperty(this.props.itemsObj.all));
+      } else {
+        itemArr.push(randomProperty(this.props.itemsObj.boots));
+      }
       if(this.props.smiteBool) {
-        itemArr.push(randomProperty(this.props.itemsObj.smite));
+        if(!this.props.bootsBool) {
+          itemArr.unshift(randomProperty(this.props.itemsObj.smite));
+        } else {
+          itemArr.push(randomProperty(this.props.itemsObj.smite));
+        }
         for(var i=0;i<4;i++) {
           itemArr.push(randomProperty(this.props.itemsObj.all));
         }

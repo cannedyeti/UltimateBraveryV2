@@ -12,11 +12,13 @@ class Update extends React.Component {
     componentDidMount() {
         fetch('/updatedb')
             .then(res => {
+                console.log(res);
                 return res.json()
             })
             .then(obj => {
                 var data = obj;
-                var p = JSON.parse(data)
+                console.log('data', data)
+                var p = JSON.parse(data);
                 this.setState({
                     patch: p.patch
                 })
