@@ -2,7 +2,7 @@
 
 > Create full stack apps with React and Express. Run your client and server with a single command. 
 
-## Quick Start
+## Quick Start test
 
 ``` bash
 # Install dependencies for server
