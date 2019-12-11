@@ -14,16 +14,16 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 const app = express();
-const pw = process.env.DB_PASSWORD || '1234';
-const datab = process.env.DB_NAME || 'league_db';
-const user = process.env.DB_USER || 'cpotebnya';
-const env = process.env.NODE_ENV || 'local';
+const pw = process.env.DB_PASSWORD;
+const datab = process.env.DB_NAME;
+const user = process.env.DB_USER;
+const env = process.env.NODE_ENV;
 const cors = require('cors');
 
 // Discord Bot Test
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const token = 'NjUzNzE5MjczMTQyODc4MjI5.Xe7FvA.GjKxB6JhB9bsPL66mzXmT5wNYcE';
+const token = process.env.DISCORD_TOKEN
 const prefix = '^';
 var channel = '';
 const memArr = [];
