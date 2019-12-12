@@ -8,10 +8,12 @@ var async = require("async");
 //let secretVar = secrets.secrets();
 
 const app = express();
-const pw = process.env.DB_PASSWORD;
-const datab = process.env.DB_NAME;
-const user = process.env.DB_USER;
-const env = process.env.NODE_ENV || 'local';
+const pw = process.env.REACT_APP_DB_PASSWORD;
+const datab = process.env.REACT_APP_DB_NAME;
+const user = process.env.REACT_APP_DB_USER;
+const env = process.env.REACT_APP_NODE_ENV || 'local';
+
+console.log('env', process.env.REACT_APP_DB_PASSWORD, process.env.REACT_APP_DB_NAME, process.env.REACT_APP_DB_USER, process.env.REACT_APP_NODE_ENV )
 
 const cors = require('cors')
 
