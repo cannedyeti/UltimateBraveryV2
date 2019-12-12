@@ -1,6 +1,7 @@
 import TeamInput from './TeamInput';
 import TeamName from './TeamName';
 import ShuffledTeam from './ShuffledTeam';
+import GetPlayers from './GetPlayers';
 const React = require('react');
 var NavLink = require('react-router-dom').NavLink;
 
@@ -98,6 +99,7 @@ class TeamGenerator extends React.Component {
                 <TeamInput cName="input input--player" placeholder="Player Ten" />
             </div>
             <button onClick={this.randomizeTeams} className="button button--randomize">Randomize</button>
+            <GetPlayers />
         </div>
         {this.state.message ? this.state.message : null}
         <div className="team-output-container">
