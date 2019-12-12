@@ -17,7 +17,7 @@ const app = express();
 const pw = process.env.REACT_APP_DB_PASSWORD;
 const datab = process.env.REACT_APP_DB_NAME;
 const user = process.env.REACT_APP_DB_USER;
-const env = process.env.NODE_ENV;
+const env = process.env.REACT_APP_NODE_ENV;
 const cors = require('cors');
 
 // Discord Bot Test
