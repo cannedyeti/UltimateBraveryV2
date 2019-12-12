@@ -60,6 +60,7 @@ app.use(bodyParser.json())
 
 // Serve static assets if in prod
 if(env == 'production') {
+  console.log('in production!')
 	app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
