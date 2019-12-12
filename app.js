@@ -23,13 +23,12 @@ const cors = require('cors');
 // Discord Bot Test
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const token = process.env.REACT_APP_DISCORD_TOKEN;
+const token = process.env.REACT_APP_DISCORD_TOKEN
 const prefix = '^';
 var channel = '';
 const memArr = [];
 
-console.log('env', process.env)
-console.log('env variables: user:', user, 'pw:', pw, 'env:', env, 'token:', token)
+console.log('env', process.env.REACT_APP_DB_PASSWORD, process.env.REACT_APP_DB_NAME, process.env.REACT_APP_DB_USER, process.env.NODE_ENV )
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
