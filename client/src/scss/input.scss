@@ -10,4 +10,9 @@
     &::placeholder {
         color: var(--font-color);
     }
+    &--discord {
+        box-sizing: border-box;
+        border-radius: 0;
+        border-right: none;
+    }
 }

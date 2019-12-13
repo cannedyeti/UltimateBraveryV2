@@ -6,6 +6,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 var async = require("async");
 var bodyParser = require('body-parser');
+var history = require('connect-history-api-fallback');
 //let secretVar = secrets.secrets();
 
 // create application/json parser
@@ -57,6 +58,7 @@ client.login(token);
 
 app.use(cors());
 app.use(bodyParser.json())
+// app.use(history());
 
 // Serve static assets if in prod
 if(env == 'production') {
@@ -262,6 +264,15 @@ app.get('/updatedb', (req, res) => {
       }); //end conn
     })
 });
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'), function(err) {
+    if (err) {
+      console.log('oops')
+      res.status(500).send(err)
+    }
+  })
+})
 
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

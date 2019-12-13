@@ -38,9 +38,9 @@ class GetPlayers extends React.Component {
   }
   render() {
     return (
-      <div>
-        <input type="text" className='input input--player' value={this.state.channelId} onChange={this.handleChange} placeholder="Discord Channel Id"/>
-        <button onClick={this.getPlayers} className="button">Get Players</button>
+      <div className="get-players">
+        <input type="text" className='input input--discord' value={this.state.channelId} onChange={this.handleChange} placeholder="Discord Channel Id"/>
+        <button onClick={this.getPlayers} className="button button--get-players">Get Players</button>
         <div className="">
             {this.state.players ? 
                 this.state.players.map(i => (
