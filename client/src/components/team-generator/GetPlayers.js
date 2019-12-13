@@ -47,7 +47,7 @@ class GetPlayers extends React.Component {
   render() {
     return (
       <div className="get-players">
-        <div classname="get-players__input">
+        <div className="get-players__input">
           <input type="text" className='input input--discord' value={this.state.channelId} onChange={this.handleChange} placeholder="Discord Channel Id"/>
           <button onClick={this.getPlayers} className="button button--get-players">Get Players</button>
         </div>
