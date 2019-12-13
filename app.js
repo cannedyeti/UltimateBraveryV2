@@ -123,8 +123,8 @@ app.post('/discord', (req, res) => {
   const teamsEmbed = new Discord.RichEmbed()
     .setTitle('10s Teams')
     .setURL('http://krue-simulator.com/team-generator')
-    .addField(teams[0].name, teams[0].players.join('\n'))
-    .addField(teams[1].name, teams[1].players.join('\n'))
+    .addField(teams[0].name, teams[0].players.join('\n'), true)
+    .addField(teams[1].name, teams[1].players.join('\n'), true)
   client.channels.get(discord['id']).send(teamsEmbed)
 });
 
