@@ -27,7 +27,8 @@ const client = new Discord.Client();
 const token = process.env.REACT_APP_DISCORD_TOKEN
 const prefix = '^';
 var channel = '';
-const memArr = [];
+var memArr = [];
+var discordChannel;
 
 console.log('env', process.env.REACT_APP_DB_PASSWORD, process.env.REACT_APP_DB_NAME, process.env.REACT_APP_DB_USER, process.env.NODE_ENV )
 
@@ -70,6 +71,12 @@ const port = process.env.PORT || 5000;
 
 const LEAGUE_VERSION_API = 'https://ddragon.leagueoflegends.com/api/versions.json';
 
+// Functions 
+
+
+
+// End functions
+
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : user,
@@ -88,12 +95,37 @@ connection.connect(function(err){
 app.post('/players', (req, res) => {
   var c = req.body.channel;
   var channel = client.channels.get(c);
-  const memArr = [];
+  var primaryTextChannel = channel.guild.channels.filter((c) => {
+    if(c.type == 'text' && c.position == 0) {
+      return c;
+    }
+  })
+  discordChannel = primaryTextChannel.values().next().value;
+  var memArr = [];
   const members = channel.members;
   members.forEach(x => {
-    memArr.push(x.user.username);
+    // get either nickname or username
+    var name = x.nickname || x.user.username
+    memArr.push(name);
   })
-  res.send(memArr)
+  var obj = {
+    'memArr': memArr,
+    'discordChannel': discordChannel
+  } 
+  res.send(obj)
+});
+
+app.post('/discord', (req, res) => {
+  var data = req.body;
+  var discord = data.discord;
+  var teams = data.teams;
+  
+  const teamsEmbed = new Discord.RichEmbed()
+    .setTitle('10s Teams')
+    .setURL('http://krue-simulator.com/team-generator')
+    .addField(teams[0].name, teams[0].players.join('\n'))
+    .addField(teams[1].name, teams[1].players.join('\n'))
+  client.channels.get(discord['id']).send(teamsEmbed)
 });
 
 app.get('/db', (req, res) => {
