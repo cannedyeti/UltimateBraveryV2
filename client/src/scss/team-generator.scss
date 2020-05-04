@@ -1,5 +1,12 @@
 .team-generator {
+    &__container {
+        display: flex;
+    }
+    &__input {
+        flex-basis: 50%;
+    }
     .team-input-container {
+        flex-basis: 50%;
         display: flex;
         justify-content: space-evenly;
     }
@@ -9,9 +16,13 @@
         justify-content: center;
         padding: 2rem 0;
     }
-    .team-output-container {
-        display: flex;
+    &__output {
+        flex-basis: 50%;
         justify-content: space-evenly;
+        .output__teams {
+            display: flex;
+            flex-direction: row;
+        }
         .team-container {
             flex: 1 0 50%;
         }

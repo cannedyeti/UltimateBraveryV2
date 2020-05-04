@@ -21,6 +21,7 @@
     "async": "^3.0.0",
     "body-parser": "^1.19.0",
     "concurrently": "^3.5.1",
+    "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.5",
     "discord.js": "^11.5.1",
     "dotenv": "^8.0.0",

@@ -25,7 +25,7 @@ client.on('message', msg => {
     members.forEach(x => {
       memArr.push(x.user.username);
     })
-    console.log(memArr);
+    console.log(memArr.join(", "));
   }
 });
 client.login(token);
@@ -35,12 +35,24 @@ module.exports = {
     getPlayers: function(req) {
         var c = req.body.channel;
         var channel = client.channels.get(c);
-        const memArr = [];
+        var primaryTextChannel = channel.guild.channels.filter((c) => {
+            if(c.type == 'text' && c.position == 0) {
+            return c;
+            }
+        })
+        discordChannel = primaryTextChannel.values().next().value;
+        var memArr = [];
         const members = channel.members;
         members.forEach(x => {
-            memArr.push(x.user.username);
+            // get either nickname or username
+            var name = x.nickname || x.user.username
+            memArr.push(name);
         })
-        return memArr;
+        var obj = {
+            'memArr': memArr,
+            'discordChannel': discordChannel
+        } 
+        return obj;
     }
 };
   

@@ -5,7 +5,6 @@ class ShuffledTeam extends React.Component {
     super(props);
   }
   render() {
-    console.log('players', this.props.players)
     return (
       <div className="shuffled-team">
         {this.props.players.map((p, i) => {

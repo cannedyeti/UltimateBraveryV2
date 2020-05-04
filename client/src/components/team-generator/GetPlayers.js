@@ -5,7 +5,8 @@ class GetPlayers extends React.Component {
     super(props);
     this.state = {
       channelId: '',
-      players: []
+      players: [],
+      discordChannel: {}
     };
     this.getPlayers = this.getPlayers.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -14,6 +15,10 @@ class GetPlayers extends React.Component {
   handleChange(event) {
     this.setState({channelId: event.target.value});
   }
+
+  sendChannel = () => {
+    this.props.giveDiscordChannel(this.state.discordChannel)
+  };
 
   getPlayers() {
     var id = this.state.channelId;
@@ -31,24 +36,20 @@ class GetPlayers extends React.Component {
             return res.json();
         })
         .then(obj => {
+            this.props.giveDiscordChannel(obj.discordChannel)
+            this.props.getDiscordPlayers(obj.memArr)
             this.setState({
-                players: obj
+                players: obj.memArr,
+                discordChannel: obj.discordChannel
             })  
         })
   }
   render() {
     return (
-      <div>
-        <input type="text" className='input input--player' value={this.state.channelId} onChange={this.handleChange} placeholder="Discord Channel Id"/>
-        <button onClick={this.getPlayers} className="button">Get Players</button>
-        <div className="">
-            {this.state.players ? 
-                this.state.players.map(i => (
-                <div key={i}>{i}</div>
-                ))
-                : 
-                ''
-            }
+      <div className="get-players">
+        <div className="get-players__input">
+          <input type="text" className='input input--discord' value={this.state.channelId} onChange={this.handleChange} placeholder="Discord Channel Id"/>
+          <button onClick={this.getPlayers} className="button button--get-players">Get Players</button>
         </div>
       </div>
     )

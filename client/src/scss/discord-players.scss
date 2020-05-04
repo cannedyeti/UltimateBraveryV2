@@ -1,0 +1,9 @@
+.discord-players {
+    padding-bottom: 2rem;
+    .discord-user {
+        color: red;
+        &--is-playing {
+            color: #33cc33;
+        }
+    }
+}

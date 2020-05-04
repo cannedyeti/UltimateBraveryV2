@@ -1,0 +1,10 @@
+.get-players {
+    padding-bottom: 1rem;
+    &__input {
+        display: flex;
+        justify-content: center;
+    }
+    &__players-container {
+        display: flex;
+    }
+}

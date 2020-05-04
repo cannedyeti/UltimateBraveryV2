@@ -7,6 +7,7 @@ const fetch = require('node-fetch');
 const botFile = require('./client/src/discord/bot');
 var async = require("async");
 var bodyParser = require('body-parser');
+var history = require('connect-history-api-fallback');
 //let secretVar = secrets.secrets();
 
 // create application/json parser
@@ -25,15 +26,23 @@ console.log('env', process.env.REACT_APP_DB_PASSWORD, process.env.REACT_APP_DB_N
 
 app.use(cors());
 app.use(bodyParser.json())
+// app.use(history());
 
 // Serve static assets if in prod
 if(env == 'production') {
+  console.log('in production!')
 	app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
 const port = process.env.PORT || 5000;
 
 const LEAGUE_VERSION_API = 'https://ddragon.leagueoflegends.com/api/versions.json';
+
+// Functions 
+
+
+
+// End functions
 
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -51,8 +60,21 @@ connection.connect(function(err){
 });
 
 app.post('/players', (req, res) => {
-  var t = botFile.getPlayers(req);
-  res.send(t)
+  var obj = botFile.getPlayers(req);
+  res.send(obj)
+});
+
+app.post('/discord', (req, res) => {
+  var data = req.body;
+  var discord = data.discord;
+  var teams = data.teams;
+  
+  const teamsEmbed = new Discord.RichEmbed()
+    .setTitle('10s Teams')
+    .setURL('http://krue-simulator.com/team-generator')
+    .addField(teams[0].name, teams[0].players.join('\n'), true)
+    .addField(teams[1].name, teams[1].players.join('\n'), true)
+  client.channels.get(discord['id']).send(teamsEmbed)
 });
 
 app.get('/db', (req, res) => {
@@ -223,6 +245,15 @@ app.get('/updatedb', (req, res) => {
       }); //end conn
     })
 });
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'), function(err) {
+    if (err) {
+      console.log('oops')
+      res.status(500).send(err)
+    }
+  })
+})
 
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
