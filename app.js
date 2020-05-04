@@ -4,6 +4,7 @@ const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
 const fetch = require('node-fetch');
+const botFile = require('./client/src/discord/bot');
 var async = require("async");
 var bodyParser = require('body-parser');
 //let secretVar = secrets.secrets();
@@ -20,40 +21,7 @@ const user = process.env.REACT_APP_DB_USER;
 const env = process.env.REACT_APP_NODE_ENV;
 const cors = require('cors');
 
-// Discord Bot Test
-const Discord = require('discord.js');
-const client = new Discord.Client();
-const token = process.env.REACT_APP_DISCORD_TOKEN
-const prefix = '^';
-var channel = '';
-const memArr = [];
-
 console.log('env', process.env.REACT_APP_DB_PASSWORD, process.env.REACT_APP_DB_NAME, process.env.REACT_APP_DB_USER, process.env.REACT_APP_NODE_ENV )
-
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-});
-
-client.on('message', msg => {
-  if (!msg.content.startsWith(prefix)) {
-    return;
-  }
-  var content = msg.content.slice(1);
-  if (content === 'getPlayers') {
-    if (!msg.member.voiceChannel) {
-      msg.reply('You must be in a voice channel to do that.');
-      return;
-    }
-    const members = msg.member.voiceChannel.members;
-    const memArr = [];
-    members.forEach(x => {
-      memArr.push(x.user.username);
-    })
-    console.log(memArr);
-  }
-});
-client.login(token);
-// End discord test
 
 app.use(cors());
 app.use(bodyParser.json())
@@ -83,14 +51,8 @@ connection.connect(function(err){
 });
 
 app.post('/players', (req, res) => {
-  var c = req.body.channel;
-  var channel = client.channels.get(c);
-  const memArr = [];
-  const members = channel.members;
-  members.forEach(x => {
-    memArr.push(x.user.username);
-  })
-  res.send(memArr)
+  var t = botFile.getPlayers(req);
+  res.send(t)
 });
 
 app.get('/db', (req, res) => {
